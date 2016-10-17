@@ -61,3 +61,5 @@
 
 
       SELECT article FROM comments WHERE comments.comment='';
+
+
