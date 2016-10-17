@@ -24,6 +24,6 @@
 
 	SELECT MAX(city) FROM subscribers;  (Maximum number of people )
 
-	
+	SELECT city, COUNT(*) AS cityCount FROM subscribers GROUP BY city ORDER BY cityCount DESC LIMIT 1; 		(city max)
 
 
