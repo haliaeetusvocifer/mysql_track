@@ -1,15 +1,7 @@
-Create a DB named "vtapp", create a db user named 'vtapp_user' and give him permissions to access vtappDB.
-
-		COMMANDS:
-
-
-	CREATE DATABASE vtapp;					[Creates vtapp]
+	CREATE DATABASE vtapp;	
 	
-	USE vtapp;								[swicthes to vtapp]
+	USE vtapp;			
 
-		CREATE USER 'vtapp_user'@'localhost' IDENTIFIED BY '';		[Creates user vtapp_user without password]
+		CREATE USER 'vtapp_user'@'localhost' IDENTIFIED BY '';	
 
-		GRANT ALL ON vtapp.* TO 'vtapp_user'@'localhost';			[Grants vtapp_user all access to the vtapp]
-
-
-
+		GRANT ALL ON vtapp.* TO 'vtapp_user'@'localhost';	
