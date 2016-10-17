@@ -63,3 +63,9 @@
       SELECT article FROM comments WHERE comments.comment='';
 
 
+      SELECT DISTINCT comments.article FROM comments,articles
+        WHERE (articles.article=comments.comment='');
+
+
+
+
