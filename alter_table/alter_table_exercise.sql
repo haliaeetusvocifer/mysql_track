@@ -1,8 +1,8 @@
-1. Create a table named "testing_table" with following fields: name (string), contact_name (string), roll_no (string)
+/*1. Create a table named "testing_table" with following fields: name (string), contact_name (string), roll_no (string)
 	
 		Before creating a table, mysql will be started, initiated in terminal and database is created:
 
-		COMMANDS:
+		COMMANDS:*/
 
 		mysql -u root -p
 
@@ -20,24 +20,24 @@
 
 
 
-2. Delete column name
+/*2. Delete column name
 	
-	COMMAND:
+	COMMAND:*/
 
 		ALTER TABLE testing_table DROP name;       
 
 
 
-3. Rename contact_name to username.
+/*3. Rename contact_name to username.
 
-	COMMAND:
+	COMMAND:*/
 
 		ALTER TABLE testing_table CHANGE COLUMN contact_name username VARCHAR(100);
 
 
-4. Add two fields first_name, last_name.
+/*4. Add two fields first_name, last_name.
 
-	COMMAND:
+	COMMAND:*/
 
 		ALTER TABLE testing_table ADD (
 			first_name VARCHAR(100), 
@@ -45,10 +45,9 @@
 			);
 
 
-5. Change the type of roll_no to integer
+/*5. Change the type of roll_no to integer
 
-	COMMAND:
+	COMMAND:*/
 
 		ALTER TABLE testing_table MODIFY roll_no INT;
 		
-
