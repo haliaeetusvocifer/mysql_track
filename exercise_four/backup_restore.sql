@@ -1,6 +1,6 @@
 
-mysqldump -u root -p vtapp > vtapp_backup.sql
+mysqldump -u root -p cookbook > cookbook_backup.sql
 
- 	CREATE DATABASE restored;
+ 	CREATE DATABASE restore;
 
- 	mysqldump -u root -p restored < vtapp_backup.sql
+ 	mysql -u root -p restore < cookbook_backup.sql
