@@ -1,3 +1,9 @@
+/*
+What do different columns in the output of EXPLAIN mean? What possible values can
+those have? What is the meaning of those values?
+*/
+
+
 
 The EXPLAIN statement provides information about the execution plan for a SELECT statement.
   Each output row from EXPLAIN provides information about one table.
@@ -22,11 +28,22 @@ The EXPLAIN statement provides information about the execution plan for a SELECT
 
 
 
+/*
+The value under 'rows' column in the output of EXPLAIN query and SELECT query
+after it are same. What does it mean?
+*/
+
+
   The output of rows using "EXPLAIN SELECT * FROM comments WHERE user_id = 41;" and "SELECT count(id) FROM comments;"
     are the same because the EXPLAIN listed the number of records that were examined to produce the output and the latter 
     counts the number of records.
 
 
+
+
+/*
+Is the SELECT query optimal? If no, how do we optimize it?
+*/
 
 Is the SELECT query optimal? If no, how do we optimize it?
 
@@ -36,7 +53,11 @@ Is the SELECT query optimal? If no, how do we optimize it?
 
 
 
-
+/*
+EXPLAIN a SELECT query against one of your databases which employs an INNER
+JOIN between two tables. What does the output look like? What do the values
+under different columns mean? Do you get only one row in EXPLAIN's output?
+*/
 
 
 /*INNER JOIN*/
@@ -55,6 +76,16 @@ Is the SELECT query optimal? If no, how do we optimize it?
 |  1 | SIMPLE      | articles | ALL  | NULL          | NULL | NULL    | NULL |    5 | Using temporary; Using filesort                    |
 |  1 | SIMPLE      | comments | ALL  | NULL          | NULL | NULL    | NULL |    5 | Using where; Using join buffer (Block Nested Loop) |
 +----+-------------+----------+------+---------------+------+---------+------+------+----------------------------------------------------+
+
+
+
+
+/*
+Form the same select query in above question using a subquery instead of a
+JOIN. What does the EXPLAIN output look like now? Which query is better and
+why?
+*/
+
 
 
 
