@@ -1,20 +1,28 @@
 
   CREATE DATABASE article;
 
-    USE article;
+  USE article;
 
 
-    CREATE TABLE users( user VARCHAR(100) NOT NULL,
+/*
+Manage categories, articles, comments, and users
+*/
+
+
+    CREATE TABLE users( 
+    user VARCHAR(100) NOT NULL,
     type_user INT UNSIGNED
     );
 
-    CREATE TABLE articles( article VARCHAR(300) NOT NULL,
+    CREATE TABLE articles( 
+    article VARCHAR(300) NOT NULL,
     category VARCHAR(100) NOT NULL,
     user VARCHAR(100) NOT NULL
     );
 
 
-    CREATE TABLE comments( article VARCHAR(300) NOT NULL,
+    CREATE TABLE comments( 
+    article VARCHAR(300) NOT NULL,
     comment VARCHAR(500) NOT NULL,
     user VARCHAR(100) NOT NULL
     );
@@ -49,23 +57,83 @@
 
 
 
-      SELECT * FROM articles WHERE articles.user = 'user3';
+
+/*
+Select all articles whose author's name is user3 (Do this exercise using variable
+also).
+*/
+
+  SELECT * FROM articles 
+  WHERE articles.user = 'user3';
 
 
-      SELECT article,comment FROM comments ORDER BY article;
+  SELECT * FROM articles 
+  WHERE articles.user = '';
 
 
-      SELECT comments.article, comment FROM comments, articles 
-        WHERE (comments.article=articles.article);
+/*
+For all the articles being selected above, select all the articles and also the comments
+associated with those articles in a single query (Do this using subquery also)
+*/
+  
+  SELECT article,comment 
+  FROM comments 
+  ORDER BY article;
+
+
+      
+
+  SELECT comments.article, comment 
+  FROM comments, articles 
+  WHERE (
+    comments.article=articles.article
+    );
+
+
+/*
+Write a query to select all articles which do not have any comments (Do using subquery
+also)
+*/
+      
+
+  SELECT article 
+  FROM comments 
+  WHERE comments.comment='';
 
 
 
-      SELECT article FROM comments WHERE comments.comment='';
+  SELECT DISTINCT comments.article 
+  FROM comments,articles
+  WHERE (
+    comments.comment=''
+    );
 
 
-      SELECT DISTINCT comments.article FROM comments,articles
-        WHERE (articles.article=comments.comment='');
+
+/*
+Write a query to select article which has maximum comments.
+*/
 
 
+  SELECT DISTINCT article, 
+  COUNT(*) AS MyCount
+  FROM comments 
+  GROUP BY article
+  ORDER BY MyCount
+  DESC LIMIT 1;
+
+
+/*
+Write a query to select article which does not have more than one comment by the
+same user ( do this using left join and group by )
+*/
+
+
+  SELECT DISTINCT comments.user,  
+  COUNT(DISTINCT comments.user) AS MyCount  
+  FROM comments, articles  
+  WHERE (articles.article=comments.article)  
+  GROUP BY comments.article 
+  ORDER By MyCount ASC LIMIT 1;
 
 
