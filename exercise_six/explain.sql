@@ -34,9 +34,8 @@ after it are same. What does it mean?
 */
 
 
-  The output of rows using "EXPLAIN SELECT * FROM comments WHERE user_id = 41;" and "SELECT count(id) FROM comments;"
-    are the same because the EXPLAIN listed the number of records that were examined to produce the output and the latter 
-    counts the number of records.
+  The EXPLAIN listed the number of records that were examined to produce the output and the latter 
+    counts the number of records because the comment table was not index(ed).
 
 
 
@@ -45,9 +44,8 @@ after it are same. What does it mean?
 Is the SELECT query optimal? If no, how do we optimize it?
 */
 
-Is the SELECT query optimal? If no, how do we optimize it?
 
-   We can optimize the SELECT query by: tighten the Schema, use of index(es), avoid overuse of primary keys
+   We can optimize the SELECT query by making use of index(es)
 
 
 
