@@ -4,18 +4,18 @@ USE sandwich;
 
   CREATE TABLE tastes( name VARCHAR(100) NOT NULL, 
     filling VARCHAR(100) NOT NULL
-  );
+    );
 
   CREATE TABLE sandwiches( location VARCHAR(70) NOT NULL,
     bread VARCHAR(100) NOT NULL,
     filling VARCHAR(100) NOT NULL,
     price DECIMAL(5,2)
-  );
+    );
 
   CREATE TABLE locations( lName VARCHAR(70) NOT NULL,
     phone INT UNSIGNED,
     address VARCHAR(100) NOT NULL
-  );
+    );
 
   INSERT INTO tastes (name, filling) VALUES
     ('Brown', 'Turkey'),
@@ -44,7 +44,12 @@ USE sandwich;
     ('Lincoln', 6834523, 'Lincoln Place'),
     ('O"Neill"s', 6742134, 'Pearse St'),
     ('Old Nag', 7678132, 'Dame St'),
-    ('Old Nag', 7023421, 'College St');
+    ('Buttery', 7023421, 'College St');
+
+
+/*
+places where Jones can eat (using a nested subquery).
+*/
 
     
   SELECT location 
@@ -55,20 +60,33 @@ USE sandwich;
     WHERE name = 'Jones'
   );
 
-  
-  SELECT DISTINCT sandwiches.location 
-  FROM sandwiches, tastes 
-  WHERE (
-    tastes.name = 'Jones'
-  ) 
-  AND (
-    tastes.filling = sandwiches.filling
-  );
 
 
-  SELECT DISTINCT sandwiches.location, COUNT( DISTINCT tastes.name) AS 'people total' 
+/*
+places where Jones can eat (without using a nested subquery)
+*/
+
+   
+  SELECT locAlias.* 
+  FROM locations AS locAlias 
+  JOIN sandwiches AS sanAlias 
+  ON locAlias.lName = sanAlias.location
+  JOIN tastes AS tasteAlias 
+  ON sanAlias.filling = tasteAlias.filling
+  WHERE tasteAlias.name = 'Jones';
+
+
+
+/*
+for each location the number of people who can eat there
+*/
+
+
+
+  SELECT DISTINCT sandwiches.location, COUNT( 
+    DISTINCT tastes.name
+  ) AS 'people total' 
   FROM sandwiches, tastes 
   WHERE (
     tastes.filling = sandwiches.filling
-  ) 
-  GROUP BY sandwiches.location;
+  ) GROUP BY sandwiches.location;
