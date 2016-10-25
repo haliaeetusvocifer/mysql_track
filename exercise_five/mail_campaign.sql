@@ -39,21 +39,22 @@ How many people responded from each city
 
 
 
-
 /*
 Which city were the maximum respondents from?
 */
 
+SELECT city, COUNT(*) FROM subscribers
+GROUP BY city 
+HAVING COUNT(*) = (
+  SELECT MAX(maxcity) 
+  FROM (
+    SELECT city, COUNT(*) AS maxcity 
+    FROM subscribers 
+    GROUP BY city
+  ) AS cityCounts
+);
 
-SELECT city, MAX(cityCount) 
-FROM (
-  SELECT city, COUNT(*) as cityCount    
-  FROM subscribers      
-  GROUP BY city 
-  ) as maxCity;
-
-
-    
+   
 /*
 What all email domains did people respond from ?
 */
@@ -67,14 +68,17 @@ What all email domains did people respond from ?
 Which is the most popular email domain among the respondents ?
 */
 
-
+SELECT substring_index(email_address, '@', -1)domain, COUNT(*) FROM subscribers
+GROUP BY substring_index(email_address, '@', -1)
+HAVING COUNT(*) = (
   SELECT MAX(MyCount) 
   FROM (
     SELECT  substring_index(email_address, '@', -1)domain, 
-  COUNT(*) AS MyCount 
-  FROM mail_campaign.subscribers 
-  GROUP BY substring_index(email_address, '@', -1) 
-   ) AS domanMAx;
+    COUNT(*) AS MyCount 
+    FROM mail_campaign.subscribers 
+    GROUP BY substring_index(email_address, '@', -1) 
+   ) AS domanMAx
+);
 
 
 

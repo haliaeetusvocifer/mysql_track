@@ -89,8 +89,8 @@ why?
 
 /*SUBQUERY*/
 
-  EXPLAIN SELECT comments.article, comment FROM comments, articles   
-
+  EXPLAIN SELECT comments.article, comment 
+  FROM comments, articles   
     WHERE (comments.article=articles.article)
     ORDER BY articles.article;
 
