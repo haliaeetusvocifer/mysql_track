@@ -4,18 +4,18 @@ USE sandwich;
 
   CREATE TABLE tastes( name VARCHAR(100) NOT NULL, 
     filling VARCHAR(100) NOT NULL
-    );
+  );
 
   CREATE TABLE sandwiches( location VARCHAR(70) NOT NULL,
     bread VARCHAR(100) NOT NULL,
     filling VARCHAR(100) NOT NULL,
     price DECIMAL(5,2)
-    );
+  );
 
   CREATE TABLE locations( lName VARCHAR(70) NOT NULL,
     phone INT UNSIGNED,
     address VARCHAR(100) NOT NULL
-    );
+  );
 
   INSERT INTO tastes (name, filling) VALUES
     ('Brown', 'Turkey'),
@@ -47,14 +47,28 @@ USE sandwich;
     ('Old Nag', 7023421, 'College St');
 
     
-  SELECT location FROM sandwiches
-  WHERE filling = (SELECT DISTINCT filling FROM tastes WHERE name = 'Jones');
+  SELECT location 
+  FROM sandwiches
+  WHERE filling = (
+    SELECT DISTINCT filling 
+    FROM tastes 
+    WHERE name = 'Jones'
+  );
 
   
-  SELECT DISTINCT sandwiches.location FROM sandwiches, tastes 
-  WHERE (tastes.name = 'Jones') AND (tastes.filling=sandwiches.filling);
+  SELECT DISTINCT sandwiches.location 
+  FROM sandwiches, tastes 
+  WHERE (
+    tastes.name = 'Jones'
+  ) 
+  AND (
+    tastes.filling=sandwiches.filling
+  );
 
 
   SELECT DISTINCT sandwiches.location, COUNT( DISTINCT tastes.name) AS 'people total' 
   FROM sandwiches, tastes 
-  WHERE (tastes.filling=sandwiches.filling) GROUP BY sandwiches.location;
+  WHERE (
+    tastes.filling=sandwiches.filling
+  ) 
+  GROUP BY sandwiches.location;
