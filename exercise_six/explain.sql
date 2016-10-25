@@ -46,6 +46,7 @@ Is the SELECT query optimal? If no, how do we optimize it?
 
 
    We can optimize the SELECT query by making use of index(es)
+   We can optimize it using the foreign key
 
 
 
