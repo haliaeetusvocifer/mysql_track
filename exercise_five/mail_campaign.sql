@@ -77,7 +77,7 @@ HAVING COUNT(*) = (
     COUNT(*) AS MyCount 
     FROM mail_campaign.subscribers 
     GROUP BY substring_index(email_address, '@', -1) 
-   ) AS domanMAx
+  ) AS domanMAx
 );
 
 
