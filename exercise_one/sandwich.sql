@@ -62,13 +62,13 @@ USE sandwich;
     tastes.name = 'Jones'
   ) 
   AND (
-    tastes.filling=sandwiches.filling
+    tastes.filling = sandwiches.filling
   );
 
 
   SELECT DISTINCT sandwiches.location, COUNT( DISTINCT tastes.name) AS 'people total' 
   FROM sandwiches, tastes 
   WHERE (
-    tastes.filling=sandwiches.filling
+    tastes.filling = sandwiches.filling
   ) 
   GROUP BY sandwiches.location;
