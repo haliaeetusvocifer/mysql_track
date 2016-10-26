@@ -10,50 +10,62 @@ Manage categories, articles, comments, and users
 
 
     CREATE TABLE users( 
-    user VARCHAR(100) NOT NULL,
-    type_user INT UNSIGNED
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      type_user ENUM ('admin', 'normal') DEFAULT 'admin'
+    );
+
+    CREATE TABLE categories(
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      category VARCHAR(100) NOT NULL
     );
 
     CREATE TABLE articles( 
-    article VARCHAR(300) NOT NULL,
-    category VARCHAR(100) NOT NULL,
-    user VARCHAR(100) NOT NULL
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL,
+      category_id INT NOT NULL,
+      article VARCHAR(300) NOT NULL
     );
 
 
     CREATE TABLE comments( 
-    article VARCHAR(300) NOT NULL,
-    comment VARCHAR(500) NOT NULL,
-    user VARCHAR(100) NOT NULL
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL,
+      article_id INT NOT NULL,
+      comment VARCHAR(500) NOT NULL
     );
 
-    INSERT INTO users (user, type_user) VALUES
-    ('Tunde', 1),
-    ('Brown', 2),
-    ('Jones', 1),
-    ('Segun', 2),
-    ('Sommy', 2),
-    ('Obi', 1),
-    ('user3', 2),
-    ('user2', 2),
-    ('Wilson', 1);
+    INSERT INTO users (name, type_user) VALUES
+    ('Tunde', 'amdin'),
+    ('Brown', 'normal'),
+    ('Jones', 'admin'),
+    ('Segun', 'normal'),
+    ('Obi', 'admin'),
+    ('user3', 'normal'),
+    ('user2', 'normal');
+
+    INSERT INTO categories (category) VALUES
+    (1, 'Politics'),
+    (2, 'Family'),
+    (3, 'Sports')
+    (4, 'Health');
 
 
-    INSERT INTO articles (article, category, user) VALUES
-    ('Who moved my Cheese', 'Politics', 'Tunde'),
-    ('BBOG', 'Family', 'Brown'),
-    ('Nigeria Sport', 'Sports','Jones'),
-    ('EPL week 7 Report', 'Sports','Jones'),
-    ('Family Wealth', 'Family', 'Sommy'),
-    ('Disease: Ebola', 'Health','user3');
+    INSERT INTO articles (user_id, category_id, article) VALUES
+    (1, 2, 'Who moved my Cheese'),
+    (4, 2, 'BBOG'),
+    (3, 3, 'Nigeria Sport'),
+    (3, 3, 'EPL week 7 Report'),
+    (2, 2, 'Family Wealth'),
+    (6, 4, 'Disease: Ebola');
 
 
-    INSERT INTO comments (article, comment, user) VALUES
-    ('Who moved my Cheese', 'i laugh ooo', 'Jones'),
-    ('Who moved my Cheese', 'I don"t buy the idea', 'segun'),
-    ('Family Wealth', 'great Initiative, I will apply to my family', 'Sommy'),
-    ('Family Wealth', 'It can"t work in my family', 'Segun'),
-    ('Nigeria Sport', 'remove the minister', 'Segun');
+    INSERT INTO comments (user_id, article_id, comment) VALUES
+    (3, 1, 'i laugh ooo'),
+    (4, 1, 'I don"t buy the idea'),
+    (7, 5, 'great Initiative, I will apply to my family'),
+    (4, 5, 'It can"t work in my family'),
+    (4, 3, 'remove the minister');
 
 
 
@@ -86,8 +98,8 @@ associated with those articles in a single query (Do this using subquery also)
   SELECT comments.article, comment 
   FROM comments, articles 
   WHERE (
-    comments.article=articles.article
-    );
+    comments.article = articles.article
+  );
 
 
 /*
@@ -106,7 +118,7 @@ also)
   FROM comments,articles
   WHERE (
     comments.comment=''
-    );
+  );
 
 
 
@@ -130,10 +142,13 @@ same user ( do this using left join and group by )
 
 
   SELECT DISTINCT comments.user,  
-  COUNT(DISTINCT comments.user) AS MyCount  
+  COUNT(
+    DISTINCT comments.user
+  ) AS MyCount  
   FROM comments, articles  
-  WHERE (articles.article=comments.article)  
-  GROUP BY comments.article 
+  WHERE (
+    articles.article=comments.article
+  ) GROUP BY comments.article 
   ORDER By MyCount ASC LIMIT 1;
 
 
