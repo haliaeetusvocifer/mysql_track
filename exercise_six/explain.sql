@@ -14,17 +14,28 @@ The EXPLAIN statement provides information about the execution plan for a SELECT
 
     The possible values are: 
 
-      id (The SELECT identifier), 
 
-      select_type (The type of SELECT, which can be any of SIMPLE, PRIMARY, UNION, SUBQUERY, etc),
+      id :  This is a  sequential identifier for each SELECT within the query, 
 
-      table (The name of the table to which the row of output refers),
+      select_type :  The type of SELECT, which can be any of these values SIMPLE, PRIMARY, DERIVED, SUBQUERY, DEPENDENT SUBQUERY,
+                     UNCACHEABLE SUBQUERY, UNION, DEPENDENT UNION, UNION RESULT
 
-      type, 
+      table: The name of the table to which the row of output refers,
 
-      possible_keys (The possible_keys column indicates which indexes MySQL can choose from use to find the rows in this table), 
+      type: How Mysql joins the table in use. It indicate missing indexes or how the query should be considered. Values are: SYSTEM, CONST, REF, 
+                                              REF_OR_NULL, INDEX_MERGE, UNIQUE_SUBQUERY, INDEX_SUBQUERY, RANGE, INDEX, ALL
 
-      key, key_len, filtered, extra
+      possible_keys : Shows the keys that can be used by MYSQL to find rows from table,
+
+      Key : Indicates the actual index used by MYSQL,
+
+      key_len : Indicates the length of the index the QUery optimizer chose to use.
+
+      ref : Shows the columns or constants that are compared to the index name in the key column.
+
+      rows : list the number of records that were examined to produce the output.
+
+      extra : contains additional information regarding the query execution plan. 
 
 
 
@@ -34,8 +45,7 @@ after it are same. What does it mean?
 */
 
 
-  The EXPLAIN listed the number of records that were examined to produce the output and the latter 
-    counts the number of records because the comment table was not index(ed).
+  This tell us that a total of 1002345 rows were examined to give us the result of our query
 
 
 
@@ -44,9 +54,9 @@ after it are same. What does it mean?
 Is the SELECT query optimal? If no, how do we optimize it?
 */
 
-
+  No
    We can optimize the SELECT query by making use of index(es)
-   We can optimize it using the foreign key
+   We optimize the select query by indexing user_id
 
 
 
@@ -69,7 +79,7 @@ under different columns mean? Do you get only one row in EXPLAIN's output?
       ORDER BY articles.article;
 
 
-  +----+-------------+----------+------+---------------+------+---------+------+------+----------------------------------------------------+
++----+-------------+----------+------+---------------+------+---------+------+------+----------------------------------------------------+
 | id | select_type | table    | type | possible_keys | key  | key_len | ref  | rows | Extra                                              |
 +----+-------------+----------+------+---------------+------+---------+------+------+----------------------------------------------------+
 |  1 | SIMPLE      | articles | ALL  | NULL          | NULL | NULL    | NULL |    5 | Using temporary; Using filesort                    |
@@ -92,8 +102,9 @@ why?
 
   EXPLAIN SELECT comments.article, comment 
   FROM comments, articles   
-    WHERE (comments.article=articles.article)
-    ORDER BY articles.article;
+    WHERE (
+      comments.article = articles.article
+    ) ORDER BY articles.article;
 
 
 
