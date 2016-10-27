@@ -32,7 +32,8 @@ Manage categories, articles, comments, and users
       id INT AUTO_INCREMENT PRIMARY KEY,
       user_id INT NOT NULL,
       article_id INT NOT NULL,
-      comment VARCHAR(500) NOT NULL
+      comment VARCHAR(500) NOT NULL,
+      INDEX (user_id)
     );
 
     INSERT INTO users (name, type_user) VALUES
@@ -47,7 +48,7 @@ Manage categories, articles, comments, and users
     INSERT INTO categories (category) VALUES
     (1, 'Politics'),
     (2, 'Family'),
-    (3, 'Sports')
+    (3, 'Sports'),
     (4, 'Health');
 
 
