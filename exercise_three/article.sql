@@ -81,6 +81,7 @@ also).
   WHERE users.name = 'user3';
 
 
+
   SELECT * FROM users 
   JOIN articles 
   ON users.id = articles.user_id 
@@ -91,9 +92,15 @@ For all the articles being selected above, select all the articles and also the 
 associated with those articles in a single query (Do this using subquery also)
 */
   
-  SELECT article,comment 
-  FROM comments 
-  ORDER BY article;
+
+
+  SELECT article, name, comment    
+  FROM articles    
+  INNER JOIN users       
+  ON users.id = articles.user_id 
+  INNER JOIN  comments    
+  ON comments.article_id = articles.id   
+  WHERE users.name = 'user3';
 
 
       
