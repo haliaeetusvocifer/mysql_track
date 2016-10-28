@@ -70,19 +70,21 @@ Manage categories, articles, comments, and users
 
 
 
-
 /*
 Select all articles whose author's name is user3 (Do this exercise using variable
 also).
 */
 
   SELECT * FROM articles 
-  WHERE articles.user = 'user3';
+  JOIN users 
+  ON users.id = articles.user_id 
+  WHERE users.name = 'user3';
 
 
-  SELECT * FROM articles 
-  WHERE articles.user = '';
-
+  SELECT * FROM users 
+  JOIN articles 
+  ON users.id = articles.user_id 
+  WHERE users.name = '';
 
 /*
 For all the articles being selected above, select all the articles and also the comments
