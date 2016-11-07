@@ -37,7 +37,7 @@ Manage categories, articles, comments, and users
     );
 
     INSERT INTO users (name, type_user) VALUES
-    ('Tunde', 'amdin'),
+    ('Tunde', 'admin'),
     ('Brown', 'normal'),
     ('Jones', 'admin'),
     ('Segun', 'normal'),
@@ -46,10 +46,10 @@ Manage categories, articles, comments, and users
     ('user2', 'normal');
 
     INSERT INTO categories (category) VALUES
-    (1, 'Politics'),
-    (2, 'Family'),
-    (3, 'Sports'),
-    (4, 'Health');
+    ('Politics'),
+    ('Family'),
+    ('Sports'),
+    ('Health');
 
 
     INSERT INTO articles (user_id, category_id, article) VALUES
