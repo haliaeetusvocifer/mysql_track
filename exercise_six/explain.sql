@@ -67,7 +67,7 @@ the exercise creator for a hint if you are confused.
 
 I will index the "user_id"
 
-With this, Mysql query will look up for a match with the user_id specified.
+With this, Mysql query will look up for a match with the user_id specified in my query.
 
 
 
