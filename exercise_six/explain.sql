@@ -60,6 +60,17 @@ Is the SELECT query optimal? If no, how do we optimize it?
 
 
 
+/*
+What column(s) will you index in which order? Ask
+the exercise creator for a hint if you are confused.
+*/
+
+I will index the "user_id"
+
+With this, Mysql query will look up for a match with the user_id specified.
+
+
+
 
 
 /*
