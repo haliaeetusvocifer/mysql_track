@@ -69,30 +69,28 @@ Manage categories, articles, comments, and users
     (4, 3, 'remove the minister');
 
 
-
 /*
 Select all articles whose author's name is user3 (Do this exercise using variable
 also).
 */
 
-  SELECT * FROM articles 
+  SELECT article FROM articles 
   JOIN users 
   ON users.id = articles.user_id 
   WHERE users.name = 'user3';
 
 
-
-  SELECT * FROM users 
-  JOIN articles 
+/*Using Sub query*/
+  SELECT @art:= article FROM articles 
+  JOIN users 
   ON users.id = articles.user_id 
-  WHERE users.name = '';
+  WHERE users.name = 'user3';
+
 
 /*
 For all the articles being selected above, select all the articles and also the comments
 associated with those articles in a single query (Do this using subquery also)
 */
-  
-
 
   SELECT article, name, comment    
   FROM articles    
@@ -101,48 +99,60 @@ associated with those articles in a single query (Do this using subquery also)
   INNER JOIN  comments    
   ON comments.article_id = articles.id   
   WHERE users.name = 'user3';
+  
 
-
-      
-
-  SELECT comments.article, comment 
-  FROM comments, articles 
-  WHERE (
-    comments.article = articles.article
-  );
+  SELECT comment, articles   
+  FROM comments,(     
+    SELECT article, id      
+    FROM articles      
+    WHERE user_id = (         
+      SELECT id          
+      FROM users          
+      WHERE name="user3"     
+      )   
+    ) AS artic   
+  WHERE artic.id = comments.article_id;
 
 
 /*
 Write a query to select all articles which do not have any comments (Do using subquery
 also)
 */
-      
 
-  SELECT article 
-  FROM comments 
-  WHERE comments.comment='';
+  SELECT article, comment   
+  FROM articles   
+  LEFT JOIN comments 
+  ON articles.id = comments.article_id   
+  WHERE comments.id IS NULL;
 
 
-
-  SELECT DISTINCT comments.article 
-  FROM comments,articles
-  WHERE (
-    comments.comment=''
+  SELECT article
+  FROM articles 
+  WHERE id NOT IN (
+    SELECT article_id 
+    FROM comments
   );
-
 
 
 /*
 Write a query to select article which has maximum comments.
 */
 
-
-  SELECT DISTINCT article, 
-  COUNT(*) AS MyCount
-  FROM comments 
-  GROUP BY article
-  ORDER BY MyCount
-  DESC LIMIT 1;
+  SELECT artic.*, COUNT(com.id) AS comm_count 
+  FROM articles AS artic 
+  JOIN comments AS com 
+  ON artic.id = com.article_id 
+  GROUP BY artic.id
+  HAVING comm_count = (
+    SELECT MAX(maxi.comm_count) 
+    FROM (
+        SELECT artic.*, COUNT(com.id) AS comm_count 
+        FROM articles AS artic 
+        JOIN comments AS com 
+        ON artic.id = com.article_id 
+        GROUP BY artic.id    
+    ) AS maxi
+  );
 
 
 /*
@@ -151,14 +161,11 @@ same user ( do this using left join and group by )
 */
 
 
-  SELECT DISTINCT comments.user,  
-  COUNT(
-    DISTINCT comments.user
-  ) AS MyCount  
-  FROM comments, articles  
-  WHERE (
-    articles.article=comments.article
-  ) GROUP BY comments.article 
-  ORDER By MyCount ASC LIMIT 1;
+  SELECT artic.*, COUNT(com.id) AS comm_count 
+  FROM articles AS artic 
+  LEFT JOIN comments AS com 
+  ON artic.id = com.article_id 
+  GROUP BY com.article_id, com.user_id
+  HAVING comm_count = 1;
 
 
